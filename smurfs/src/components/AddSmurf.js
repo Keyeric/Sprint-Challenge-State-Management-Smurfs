@@ -1,60 +1,57 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+// import { useHistory } from "react-router-dom";
 
 import { submitSmurf, getSmurfs } from "../actions/smurfActions";
 
 const AddSmurf = props => {
-  const [smurfName, setSmurfName] = useState("");
-  const [smurfHeight, setSmurfHeight] = useState("");
-  const [smurfAge, setSmurfAge] = useState("");
+  const [newSmurf, setNewSmurf] = useState({
+    name: "",
+    height: "",
+    age: ""
+  });
 
-  const blankBlue = {
-    key: Date.now(),
-    name: smurfName,
-    height: smurfHeight,
-    age: smurfAge,
-    id: props.smurfs.length
-  };
+  // const history = useHistory();
+
   const handleSubmit = event => {
     event.preventDefault();
-    props.submitSmurf(blankBlue);
+    props.submitSmurf(newSmurf);
   };
 
-  const handleChangeName = event => {
-    setSmurfName(event.target.value);
-  };
-  const handleChangeHeight = event => {
-    setSmurfHeight(event.target.value);
-  };
-  const handleChangeAge = event => {
-    setSmurfAge(event.target.value);
+  const handleChanges = event => {
+    setNewSmurf({
+      ...newSmurf,
+      [event.target.name]: event.target.value
+    });
   };
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="smurfyboi">New Smurf: </label>
-      <br />
-      <input
-        id="smurfyboi"
-        type="text"
-        placeholder="Name"
-        onChange={handleChangeName}
-      />
-      <br />
-      <input
-        id="smurfyboi"
-        type="number"
-        placeholder="Height"
-        onChange={handleChangeHeight}
-      />
-      <br />
-      <input
-        id="smurfyboi"
-        type="number"
-        placeholder="Age"
-        onChange={handleChangeAge}
-      />
-      <br />
-      <button type="submit">submit</button>
+      <label>
+        New Smurf:
+        <br />
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          onChange={handleChanges}
+        />
+        <br />
+        <input
+          type="number"
+          name="height"
+          placeholder="Height"
+          onChange={handleChanges}
+        />
+        <br />
+        <input
+          type="number"
+          name="age"
+          placeholder="Age"
+          onChange={handleChanges}
+        />
+        <br />
+        <button type="submit">submit</button>
+      </label>
     </form>
   );
 };

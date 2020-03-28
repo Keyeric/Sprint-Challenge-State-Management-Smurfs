@@ -3,13 +3,14 @@ import { connect } from "react-redux";
 
 import AddSmurfs from "./AddSmurf";
 
-import { getSmurfs, submitSmurf } from "../actions/smurfActions";
+import { getSmurfs, submitSmurf, deleteSmurf } from "../actions/smurfActions";
 
 const Smurfs = props => {
   const smuffinButton = e => {
     e.preventDefault();
     props.getSmurfs();
   };
+
   return (
     <div>
       <h2>Smurfs 2.0 w/ Redux:</h2>
@@ -23,6 +24,15 @@ const Smurfs = props => {
             <p>
               {ie.name}, {ie.height}cm, {ie.age} years old
             </p>
+            <span
+              onClick={e => {
+                e.stopPropagation();
+                props.deleteSmurf(ie);
+              }}
+            >
+              {" "}
+              X{" "}
+            </span>
           </div>
         );
       })}
@@ -36,4 +46,8 @@ const mapStateToProps = state => {
     error: state.error
   };
 };
-export default connect(mapStateToProps, { submitSmurf, getSmurfs })(Smurfs);
+export default connect(mapStateToProps, {
+  submitSmurf,
+  getSmurfs,
+  deleteSmurf
+})(Smurfs);

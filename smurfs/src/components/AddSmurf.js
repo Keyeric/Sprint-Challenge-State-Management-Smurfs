@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-// import { useHistory } from "react-router-dom";
+
+import { makeStyles } from "@material-ui/core/styles";
 
 import { submitSmurf, getSmurfs } from "../actions/smurfActions";
 
+const useStyles = makeStyles(theme => ({
+  add: {
+    background: "blue"
+  }
+}));
+
 const AddSmurf = props => {
+  const classes = useStyles();
   const [newSmurf, setNewSmurf] = useState({
     name: "",
     height: "",
     age: ""
   });
-
-  // const history = useHistory();
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -25,7 +31,7 @@ const AddSmurf = props => {
     });
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={classes.add} onSubmit={handleSubmit}>
       <label>
         New Smurf:
         <br />
